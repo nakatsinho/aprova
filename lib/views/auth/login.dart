@@ -1,3 +1,4 @@
+import 'package:aprova/views/auth/register.dart';
 import 'package:aprova/widgets/buttons/defaultbutton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -80,10 +81,9 @@ class _LoginState extends State<Login> {
                                               borderSide: BorderSide(
                                                   color: Colors.white))),
                                       validator: (value) {
-                                        if(value!.isEmpty)
-                                          {
-                                            return "Porfavor introduza texto nesse campo.";
-                                          }
+                                        if (value!.isEmpty) {
+                                          return "Porfavor introduza texto nesse campo.";
+                                        }
                                         return null;
                                       },
                                     ),
@@ -95,18 +95,19 @@ class _LoginState extends State<Login> {
                                       style: TextStyle(color: Colors.white),
                                       cursorColor: Colors.white,
                                       decoration: InputDecoration(
-                                          labelText: "Senha".padLeft(10),
-                                          labelStyle: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: "Lato-Light",
-                                              letterSpacing: 1.5),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.white)),),
+                                        labelText: "Senha".padLeft(10),
+                                        labelStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: "Lato-Light",
+                                            letterSpacing: 1.5),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.white)),
+                                      ),
                                       validator: passwordValidator,
                                     ),
                                     Padding(
@@ -115,7 +116,7 @@ class _LoginState extends State<Login> {
                                     DefaultButton(
                                       text: "Iniciar Sessao".toUpperCase(),
                                       press: () {
-                                        if(_formKey.currentState!.validate()){
+                                        if (_formKey.currentState!.validate()) {
                                           //Executa esse campo se campos forem validos!
                                           print("Passou com sucesso!");
                                         }
@@ -124,12 +125,16 @@ class _LoginState extends State<Login> {
                                   ],
                                 )),
                           ),
-                          Text(
-                            "Nao tem conta ?",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w200),
+                          GestureDetector(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(Register.routeNamed),
+                            child: Text(
+                              "Nao tem conta ?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w200),
+                            ),
                           )
                         ],
                       ),
