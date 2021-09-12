@@ -17,14 +17,14 @@ class DefaultButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
+                borderRadius: BorderRadius.circular(35))),
             backgroundColor: MaterialStateProperty.all(Theme.of(context).accentColor)),
         onPressed: press,
         child: Text(
           text!,
           style: TextStyle(
             fontSize: 18,
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ),

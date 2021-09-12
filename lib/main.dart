@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Aprova',
       theme: ThemeData(
+        fontFamily: 'Lato',
         primarySwatch: Colors.indigo,
         primaryColor: HexColor("#0859C8"),
         accentColor: Color(0xFFFEF9EB)
