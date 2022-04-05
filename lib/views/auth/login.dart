@@ -1,4 +1,5 @@
 import 'package:aprova/views/auth/register.dart';
+import 'package:aprova/views/root/menu.dart';
 import 'package:aprova/widgets/buttons/defaultbutton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   final passwordValidator = MultiValidator([
@@ -27,6 +29,24 @@ class _LoginState extends State<Login> {
   void dispose() {}
 
   void initState() {}
+
+  void loginPop() {
+    final snackBar = SnackBar(
+      content: Text(
+        'Data Server Not Found...!',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontWeight: FontWeight.w200,
+          fontSize: 18.0,
+          color: Colors.white54,
+        ),
+      ),
+      backgroundColor: Theme.of(context).primaryColorDark,
+      duration: Duration(seconds: 5),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,12 +134,16 @@ class _LoginState extends State<Login> {
                                         padding:
                                             EdgeInsets.symmetric(vertical: 20)),
                                     DefaultButton(
-                                      text: "Iniciar Sessao".toUpperCase(),
+                                      text: "Iniciar SESSÃO".toUpperCase(),
                                       press: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          //Executa esse campo se campos forem validos!
-                                          print("Passou com sucesso!");
-                                        }
+                                        // if (_formKey.currentState!.validate()) {
+                                        //   //Executa esse campo se campos forem validos!
+                                        //   print("Passou com sucesso!");
+                                        //   loginPop();
+                                        // }
+                                        loginPop();
+                                        Navigator.of(context)
+                                            .pushNamed(MenuScreen.routeNamed);
                                       },
                                     ),
                                   ],

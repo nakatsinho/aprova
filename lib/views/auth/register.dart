@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:aprova/utils/api.dart';
+import 'package:aprova/views/root/menu.dart';
 import 'package:aprova/widgets/buttons/defaultbutton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +16,51 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final nameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final surnameController = TextEditingController();
+  final idController = TextEditingController();
+  final numberController = TextEditingController();
+  final emailController = TextEditingController();
+
   String citiesValues = "Maputo";
   final _formKey = GlobalKey<FormState>();
+
+  _register() async {
+    var data = {
+      'name': nameController.text,
+      'surname': surnameController.text,
+      'bi': idController.text,
+      'email': emailController.text,
+      'password': passwordController.text,
+      'number': numberController.text,
+    };
+
+    var response = await MakeRequest().postData(data, 'register');
+    var body = jsonDecode(response.body);
+
+    if (body['success'] == true) {
+      Navigator.pushNamed(context, MenuScreen.routeNamed);
+    } else {
+      registerPop();
+    }
+  }
+
+  void registerPop() {
+    final snackBar = SnackBar(
+      content: Text(
+        'Data Server Not Found...!',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontWeight: FontWeight.w200,
+            fontSize: 18.0,
+            color: Theme.of(context).primaryColor),
+      ),
+      backgroundColor: Colors.white70,
+      duration: Duration(seconds: 5),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +117,7 @@ class _RegisterState extends State<Register> {
                         ),
                         Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
                         TextFormField(
-                          controller: nameController,
+                          controller: surnameController,
                           style: TextStyle(color: Colors.white),
                           cursorColor: Colors.white,
                           decoration: InputDecoration(
@@ -93,7 +140,7 @@ class _RegisterState extends State<Register> {
                         ),
                         Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
                         TextFormField(
-                          controller: nameController,
+                          controller: idController,
                           style: TextStyle(color: Colors.white),
                           cursorColor: Colors.white,
                           decoration: InputDecoration(
@@ -117,6 +164,7 @@ class _RegisterState extends State<Register> {
                         Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
                         DropdownButtonFormField<String>(
                           value: citiesValues,
+                          dropdownColor: Theme.of(context).primaryColor,
                           onChanged: (String? newValue) {
                             setState(() {
                               citiesValues = newValue!;
@@ -132,11 +180,21 @@ class _RegisterState extends State<Register> {
                             fillColor: Colors.transparent,
                           ),
                           icon: Icon(
-                            Icons.arrow_drop_down_circle_outlined,
+                            Icons.arrow_drop_down_outlined,
                             color: Colors.white,
                           ),
-                          items: <String>['Maputo', 'Gaza', 'Inhambane']
-                              .map<DropdownMenuItem<String>>((String value) {
+                          items: <String>[
+                            'Maputo',
+                            'Gaza',
+                            'Inhambane',
+                            'Manica',
+                            'Sofala',
+                            'Zambezia',
+                            'Nampula',
+                            'Tete',
+                            'Niassa',
+                            'Cabo Delgado'
+                          ].map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(
@@ -151,7 +209,7 @@ class _RegisterState extends State<Register> {
                         ),
                         Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
                         TextFormField(
-                          controller: nameController,
+                          controller: numberController,
                           style: TextStyle(color: Colors.white),
                           cursorColor: Colors.white,
                           decoration: InputDecoration(
@@ -182,7 +240,7 @@ class _RegisterState extends State<Register> {
                               fontFamily: "Lato-Light"),
                         ),
                         TextFormField(
-                          controller: nameController,
+                          controller: emailController,
                           style: TextStyle(color: Colors.white),
                           cursorColor: Colors.white,
                           decoration: InputDecoration(
@@ -205,7 +263,7 @@ class _RegisterState extends State<Register> {
                         ),
                         Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
                         TextFormField(
-                          controller: nameController,
+                          controller: passwordController,
                           style: TextStyle(color: Colors.white),
                           cursorColor: Colors.white,
                           decoration: InputDecoration(
@@ -228,7 +286,7 @@ class _RegisterState extends State<Register> {
                         ),
                         Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
                         TextFormField(
-                          controller: nameController,
+                          controller: passwordController,
                           style: TextStyle(color: Colors.white),
                           cursorColor: Colors.white,
                           decoration: InputDecoration(
@@ -261,6 +319,7 @@ class _RegisterState extends State<Register> {
                       press: () {
                         if (_formKey.currentState!.validate()) {
                           // Executa o comando de cadastro!
+                          _register();
                         }
                       }),
                 )
