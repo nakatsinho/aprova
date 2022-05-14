@@ -6,20 +6,20 @@
                 {
                     "source": "/home/kchampierpc/Champier/aprova/android/app/src/main/res/values-night/styles.xml",
                     "from": {
-                        "startLines": "3,14",
+                        "startLines": "3,16",
                         "startColumns": "4,4",
-                        "startOffsets": "172,815",
-                        "endLines": "7,16",
+                        "startOffsets": "172,933",
+                        "endLines": "9,18",
                         "endColumns": "12,12",
-                        "endOffsets": "464,979"
+                        "endOffsets": "582,1097"
                     },
                     "to": {
-                        "startLines": "2,7",
+                        "startLines": "2,9",
                         "startColumns": "4,4",
-                        "startOffsets": "55,352",
-                        "endLines": "6,9",
+                        "startOffsets": "55,470",
+                        "endLines": "8,11",
                         "endColumns": "12,12",
-                        "endOffsets": "347,516"
+                        "endOffsets": "465,634"
                     }
                 }
             ]

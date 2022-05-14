@@ -32,6 +32,8 @@ dependencies:
   form_field_validator: ^1.1.0
   connectivity: ^3.0.6
   http: ^0.13.4
+  flutter_native_splash: ^2.1.6
+  shared_preferences: 
 
 dev_dependencies:
   flutter_test:
@@ -77,3 +79,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_native_splash:
+  color: "#0859C8"
+  #background_image: "assets/background.png"
+  image: assets/logo.png
+  android_12:
+  #android: false
+  #ios: false
+  #web: false

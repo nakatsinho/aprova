@@ -1,0 +1,4 @@
+#Tue Apr 12 21:23:29 CAT 2022
+base.0=/home/kchampierpc/Champier/aprova/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

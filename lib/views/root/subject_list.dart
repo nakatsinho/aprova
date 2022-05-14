@@ -144,7 +144,7 @@ class _SubjectListState extends State<SubjectList> {
                                 ),
                               ),
                               ...(_questions[_questionIndex]['answers']
-                                      as List<Map<String, Object>>)
+                                      as List<Map<String, dynamic>>)
                                   .map(
                                 (answer) => Answer(
                                   answerText: answer['answerText'] as String,
@@ -159,7 +159,7 @@ class _SubjectListState extends State<SubjectList> {
                                       return;
                                     }
                                     //answer is being selected
-                                    // _questionAnswered(answer['score'])
+                                    _questionAnswered(answer['score']);
                                   },
                                 ),
                               ),

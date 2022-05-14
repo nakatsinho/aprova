@@ -1,4 +1,4 @@
-#Tue Apr 05 11:25:18 CAT 2022
+#Sat May 14 09:45:30 CAT 2022
 base.0=/home/kchampierpc/Champier/aprova/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

@@ -2,4 +2,14 @@
 connectivity=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-3.0.6/
 connectivity_for_web=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_for_web-0.4.0+1/
 connectivity_macos=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_macos-0.2.1+2/
+flutter_native_splash=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_native_splash-2.1.6/
 hexcolor=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/hexcolor-2.0.5/
+path_provider_linux=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.5/
+path_provider_windows=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.5/
+shared_preferences=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.13/
+shared_preferences_android=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_android-2.0.11/
+shared_preferences_ios=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_ios-2.1.0/
+shared_preferences_linux=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_linux-2.1.0/
+shared_preferences_macos=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-2.0.3/
+shared_preferences_web=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-2.0.3/
+shared_preferences_windows=/home/kchampierpc/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-2.1.0/

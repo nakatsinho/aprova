@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: 'Lato',
           primarySwatch: Colors.indigo,
-          primaryColor: HexColor("#0859C8"),
+          primaryColor: Color(0xFF0859C8),
           accentColor: Color(0xFFFEF9EB)),
       // home: MyHomePage(title: 'Flutter Demo Home Page'),
       initialRoute: Login.routeNamed,

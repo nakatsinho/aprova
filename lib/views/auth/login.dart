@@ -1,10 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:aprova/views/auth/register.dart';
 import 'package:aprova/views/root/menu.dart';
 import 'package:aprova/widgets/buttons/defaultbutton.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:aprova/widgets/snack/default_snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,6 +23,7 @@ class _LoginState extends State<Login> {
   final nameController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   final passwordValidator = MultiValidator([
     RequiredValidator(errorText: 'Porfavor, introduza tua senha'),
@@ -26,14 +31,19 @@ class _LoginState extends State<Login> {
     // PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'passwords must have at least one special character'),
   ]);
 
-  void dispose() {}
+  @override
+  void dispose() {
+    nameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   void initState() {}
 
-  void loginPop() {
+  void loginPop(String message) {
     final snackBar = SnackBar(
       content: Text(
-        'Data Server Not Found...!',
+        message,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontWeight: FontWeight.w200,
@@ -46,6 +56,84 @@ class _LoginState extends State<Login> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void localTempSave(Map<String, dynamic> json) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("user", jsonEncode(json));
+
+    saveUserCredentials(nameController.text, passwordController.text);
+
+    // give time to user change take effect
+    await Future.delayed(Duration(seconds: 2));
+
+    // loginPop();
+    Navigator.of(context).pushNamed(MenuScreen.routeNamed);
+  }
+
+  void retriveUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      http.Response loginResponse = await http
+          .post(Uri.parse("https://4cc5-197-249-5-84.ngrok.io/api/fetch/user"),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+              },
+              body: jsonEncode(<String, dynamic>{
+                'name': nameController.text,
+                'surname': passwordController.text,
+              }))
+          .timeout(Duration(seconds: 10));
+      print(loginResponse.statusCode);
+      if (loginResponse.statusCode >= 200 || loginResponse.statusCode <= 299) {
+        Map<String, dynamic> json = jsonDecode(loginResponse.body);
+        //COMPARAÇÕES
+        //nao tem utilizador
+        if (json['key'].toString() == 'non') {
+          loginPop(json['message'].toString());
+          setState(() {
+            isLoading = false;
+          });
+          return;
+        }
+        //utilizador encontrado mas pode ou nao ter lista de resumo de consumo
+        if (json['key'].toString() == 'admin' ||
+            json['key'].toString() == 'exper') {
+          try {
+            loginPop(json['message'].toString());
+            localTempSave(json);
+          } on Exception catch (e) {
+            print('failed 1');
+            DefaultSnackBar().defaultSnackBar(context, e.toString());
+            setState(() {
+              isLoading = false;
+            });
+            print(e);
+            return;
+          }
+        }
+      } else {
+        print('failed 2');
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } on TimeoutException catch (e) {
+      print('timeout! timeout! $e');
+      setState(() {
+        isLoading = false;
+        DefaultSnackBar().defaultSnackBar(context, 'Tempo Esgotado');
+      });
+    } on Exception catch (e) {
+      print('failed 1');
+      setState(() {
+        isLoading = false;
+      });
+      print(e);
+      DefaultSnackBar().defaultSnackBar(context, 'Server Connection Error...');
+    }
   }
 
   @override
@@ -112,6 +200,7 @@ class _LoginState extends State<Login> {
                                             EdgeInsets.symmetric(vertical: 10)),
                                     TextFormField(
                                       controller: passwordController,
+                                      obscureText: true,
                                       style: TextStyle(color: Colors.white),
                                       cursorColor: Colors.white,
                                       decoration: InputDecoration(
@@ -136,14 +225,10 @@ class _LoginState extends State<Login> {
                                     DefaultButton(
                                       text: "Iniciar SESSÃO".toUpperCase(),
                                       press: () {
-                                        // if (_formKey.currentState!.validate()) {
-                                        //   //Executa esse campo se campos forem validos!
-                                        //   print("Passou com sucesso!");
-                                        //   loginPop();
-                                        // }
-                                        loginPop();
-                                        Navigator.of(context)
-                                            .pushNamed(MenuScreen.routeNamed);
+                                        if (_formKey.currentState!.validate()) {
+                                          //Executa esse campo se campos forem validos!
+                                          retriveUser();
+                                        }
                                       },
                                     ),
                                   ],
@@ -171,5 +256,11 @@ class _LoginState extends State<Login> {
         ],
       ),
     );
+  }
+
+  void saveUserCredentials(String name, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("name", name);
+    prefs.setString("password", password);
   }
 }

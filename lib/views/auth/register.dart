@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:aprova/utils/api.dart';
 import 'package:aprova/views/root/menu.dart';
 import 'package:aprova/widgets/buttons/defaultbutton.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {

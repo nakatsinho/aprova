@@ -65,7 +65,8 @@ class _SubjectState extends State<Subject> {
                               padding: EdgeInsets.symmetric(vertical: 40.0)),
                           DropdownButtonFormField<String>(
                             value: subjectValues,
-                            dropdownColor: Theme.of(context).accentColor,
+                            dropdownColor:
+                                Theme.of(context).colorScheme.secondary,
                             onChanged: (String? newValue) {
                               setState(() {
                                 subjectValues = newValue!;
@@ -102,7 +103,8 @@ class _SubjectState extends State<Subject> {
                               padding: EdgeInsets.symmetric(vertical: 10.0)),
                           DropdownButtonFormField<String>(
                             value: subjectValues,
-                            dropdownColor: Theme.of(context).accentColor,
+                            dropdownColor:
+                                Theme.of(context).colorScheme.secondary,
                             onChanged: (String? newValue) {
                               setState(() {
                                 subjectValues = newValue!;
