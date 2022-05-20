@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:aprova/utils/const.dart';
+import 'package:aprova/utils/env.dart';
 import 'package:aprova/views/auth/register.dart';
 import 'package:aprova/views/root/menu.dart';
 import 'package:aprova/widgets/buttons/defaultbutton.dart';
@@ -77,7 +79,7 @@ class _LoginState extends State<Login> {
     });
     try {
       http.Response loginResponse = await http
-          .post(Uri.parse("https://4cc5-197-249-5-84.ngrok.io/api/fetch/user"),
+          .post(Uri.parse(APP_URL + "fetch/user"),
               headers: <String, String>{
                 'Content-Type': 'application/json; charset=UTF-8',
               },
@@ -224,6 +226,8 @@ class _LoginState extends State<Login> {
                                             EdgeInsets.symmetric(vertical: 20)),
                                     DefaultButton(
                                       text: "Iniciar SESSÃO".toUpperCase(),
+                                      color: BLUE,
+                                      backColor: ACCENT,
                                       press: () {
                                         if (_formKey.currentState!.validate()) {
                                           //Executa esse campo se campos forem validos!

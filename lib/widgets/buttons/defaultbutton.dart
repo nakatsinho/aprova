@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class DefaultButton extends StatelessWidget {
-  const DefaultButton({
-    Key? key,
-    this.text,
-    this.press,
-  }) : super(key: key);
+  const DefaultButton(
+      {Key? key, this.text, this.press, this.color, this.backColor})
+      : super(key: key);
+  final Color? color;
+  final Color? backColor;
   final String? text;
-  final Function()? press; // It possible to use VoidCallBack? instead of Function
+  final Function()?
+      press; // It possible to use VoidCallBack? instead of Function
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +19,13 @@ class DefaultButton extends StatelessWidget {
         style: ButtonStyle(
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(35))),
-            backgroundColor: MaterialStateProperty.all(Theme.of(context).accentColor)),
+            backgroundColor: MaterialStateProperty.all(backColor)),
         onPressed: press,
         child: Text(
           text!,
           style: TextStyle(
             fontSize: 18,
-            color: Theme.of(context).primaryColor,
+            color: color,
           ),
         ),
       ),

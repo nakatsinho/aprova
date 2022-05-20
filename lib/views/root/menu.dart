@@ -1,5 +1,10 @@
+import 'package:aprova/models/exam_type.dart';
+import 'package:aprova/utils/api.dart';
+import 'package:aprova/utils/const.dart';
+import 'package:aprova/views/exams/exam_card.dart';
+import 'package:aprova/views/root/header.dart';
+import 'package:aprova/views/root/navigation.dart';
 import 'package:aprova/views/root/subject.dart';
-import 'package:aprova/widgets/buttons/menubutton.dart';
 import 'package:flutter/material.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -28,86 +33,92 @@ class _MenuScreenState extends State<MenuScreen> {
       //     ),
       //   ],
       // ),
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Image.asset("assets/background.jpg", fit: BoxFit.cover),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Center(
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            height: 50.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons.more_horiz_rounded,
-                                  color: Colors.white,
-                                ),
-                                CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.person,
-                                        color: Theme.of(context).primaryColor,
-                                      )),
-                                ),
-                              ],
+      drawer: NavigationDrawerMain(),
+      body: Builder(
+        builder: (context) {
+          return Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Image.asset("assets/background.jpg", fit: BoxFit.cover),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 200.0,
+                            child: Center(
+                              child: Column(
+                                children: <Widget>[
+                                  HeaderMenu(),
+                                  Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 20)),
+                                  Text(
+                                    "Tipo de Exame",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 34.0,
+                                      letterSpacing: 2.5,
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 10)),
+                                ],
+                              ),
                             ),
-                          ),
-                          Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                          Text(
-                            "Tipo de Exame",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 34.0,
-                              letterSpacing: 2.5,
-                            ),
-                          ),
-                          Padding(padding: EdgeInsets.symmetric(vertical: 25)),
-                          MenuButton(
-                            icon: Icon(
-                              Icons.archive,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            leanding: "Exame",
-                            text: "Admissão".toUpperCase(),
-                            press: () {
-                              print("Cartao selecionado!");
-                            },
-                          ),
-                          Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-                          MenuButton(
-                            icon: Icon(
-                              Icons.archive,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            leanding: "Exame",
-                            text: "Extraordinário".toUpperCase(),
-                            press: () {
-                              Navigator.of(context)
-                                  .pushNamed(Subject.routeNamed);
-                            },
-                          ),
-                        ],
+                          )),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                            color: Colors.transparent,
+                            child: FutureBuilder<List<ExamType>>(
+                              future: MakeRequest.getAllCountriesModel(context),
+                              builder: (context, snapshot) {
+                                final fetchExamsType = snapshot.data;
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return queryExamsTypeList(fetchExamsType!);
+                                } else if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      color: ACCENT,
+                                    ),
+                                  );
+                                }
+                                return Container();
+                              },
+                            )),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        }
       ),
     );
   }
+
+  Widget queryExamsTypeList(List<ExamType> fetchExamsTypes) => ListView.builder(
+      physics: BouncingScrollPhysics(),
+      itemCount: fetchExamsTypes.length,
+      itemBuilder: (context, index) => ExamTypeCard(
+          itemIndex: index,
+          examType: fetchExamsTypes[index],
+          press: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Subject(
+                    examType: fetchExamsTypes[index].name,
+                  ),
+                ));
+            print(fetchExamsTypes[index].name);
+          }));
 }

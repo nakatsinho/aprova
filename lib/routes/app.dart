@@ -9,6 +9,5 @@ final Map<String, WidgetBuilder> routes = {
   Login.routeNamed: (context) => new Login(),
   Register.routeNamed: (context) => new Register(),
   MenuScreen.routeNamed: (context) => new MenuScreen(),
-  Subject.routeNamed: (context) => new Subject(),
   SubjectList.routeNamed: (context) => new SubjectList(),
 };

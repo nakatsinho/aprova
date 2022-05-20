@@ -10,7 +10,7 @@ class DefaultSnackBar extends StatelessWidget {
           action: SnackBarAction(
             label: 'OK',
             onPressed: ScaffoldMessenger.of(context).hideCurrentSnackBar,
-            textColor: YELLOW,
+            textColor: BLUE,
           ),
           content: Row(
             mainAxisAlignment: MainAxisAlignment.center,

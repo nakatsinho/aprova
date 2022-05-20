@@ -1,7 +1,7 @@
 import 'package:aprova/routes/app.dart';
+import 'package:aprova/utils/const.dart';
 import 'package:aprova/views/auth/login.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Aprova',
       theme: ThemeData(
           fontFamily: 'Lato',
-          primarySwatch: Colors.indigo,
-          primaryColor: Color(0xFF0859C8),
-          accentColor: Color(0xFFFEF9EB)),
+          primaryColor: BLUE,
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo)
+              .copyWith(secondary: ACCENT)),
       // home: MyHomePage(title: 'Flutter Demo Home Page'),
       initialRoute: Login.routeNamed,
       routes: routes,
